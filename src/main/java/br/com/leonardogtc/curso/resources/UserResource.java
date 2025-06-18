@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,13 @@ public class UserResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		// Retorna o status 201 Created e o objeto inserido no corpo da resposta
 		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
+		obj = service.update(id, obj);
+		// Retorna o status 200 OK e o objeto atualizado no corpo da resposta
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@DeleteMapping("/{id}")
